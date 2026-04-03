@@ -15,13 +15,13 @@ npm run lint      # Run ESLint
 
 Single-page React app (no backend, no persistence — data resets on refresh). Built with Vite + React 19.
 
-All application logic lives in `src/App.jsx` — a single monolithic component. This is intentional; the project is a course starter designed to be refactored.
+**Component structure:**
 
-**State in App.jsx:**
-- `transactions` — array of `{ id, description, amount, type, category, date }`. Note: `amount` is stored as a string.
-- Form state: `description`, `amount`, `type`, `category`
-- Filter state: `filterType`, `filterCategory`
+- `App.jsx` — root component; owns the `transactions` array state and passes it down. Renders the three child components.
+- `Summary.jsx` — receives `transactions`, computes `totalIncome`, `totalExpenses`, and `balance` internally.
+- `TransactionForm.jsx` — owns its own form state (`description`, `amount`, `type`, `category`); calls `onAdd(transaction)` prop on submit.
+- `TransactionList.jsx` — receives `transactions`, owns filter state (`filterType`, `filterCategory`) internally.
 
-**Features:** summary dashboard (income/expense/balance totals), add-transaction form with validation, filter by type and category, transaction table.
+**Transaction shape:** `{ id, description, amount, type, category, date }` — `amount` is a number, `type` is `"income" | "expense"`.
 
-> Per README: the project intentionally contains bugs, poor UI, and messy code for teaching purposes.
+**Shared constant:** `categories` array is currently duplicated in `TransactionForm.jsx` and `TransactionList.jsx`.
